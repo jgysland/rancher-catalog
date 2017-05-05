@@ -17,28 +17,28 @@
       label: "Gitlab external_url prefix:"
       description: |
         This is needed for the docker-compose file to set the correct external_url
-      default: 'https://'
+      default: 'http://'
       required: true
       type: "string"
       options:
         - 'https://'
         - 'http://'
     - variable: "http_port"
-      description: "HTTP port to expose on host. Will be used to bind TCP"
+      description: "HTTP port to expose on host. Will be used to bind TCP. If blank, no port is published."
       label: "HTTP port:"
-      required: true
+      required: false
       default: 80
       type: "string"
     - variable: "https_port"
-      description: "HTTPS port to expose on host. Will be used to bind TCP"
+      description: "HTTPS port to expose on host. Will be used to bind TCP. If blank, no port is published."
       label: "HTTPS port:"
-      required: true
+      required: false
       default: 443
       type: "string"
     - variable: "ssh_port"
-      description: "SSH port to expose on host. Will be used to bind TCP"
+      description: "SSH port to expose on host. Will be used to bind TCP. If blank, no port is published."
       label: "SSH port:"
-      required: true
+      required: false
       default: 22
       type: "string"
 
