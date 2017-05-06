@@ -1,0 +1,53 @@
+APP_NAME = ${APP_NAME}
+RUN_USER = ${RUN_USER}
+RUN_MODE = ${RUN_MODE}
+
+[database]
+DB_TYPE  = postgres
+HOST     = db:5432
+NAME     = ${POSTGRES_DB}
+USER     = ${POSTGRES_USER}
+PASSWD   = ${POSTGRES_PASSWORD}
+SSL_MODE = ${POSTGRES_SSL_MODE}
+
+[repository]
+ROOT = /data/git/gogs-repositories
+
+[server]
+DOMAIN       = ${DOMAIN}
+HTTP_PORT    = ${HTTP_PORT}
+ROOT_URL     = ${PUBLIC_PROTO}://${DOMAIN}/
+DISABLE_SSH  = ${DISABLE_SSH}
+SSH_PORT     = ${PUBLIC_SSH_PORT}
+OFFLINE_MODE = ${OFFLINE_MODE}
+
+[mailer]
+ENABLED = ${MAILER_ENABLED}
+
+[service]
+REGISTER_EMAIL_CONFIRM = ${REGISTER_EMAIL_CONFIRM}
+ENABLE_NOTIFY_MAIL     = ${ENABLE_NOTIFY_MAIL}
+DISABLE_REGISTRATION   = ${DISABLE_REGISTRATION}
+ENABLE_CAPTCHA         = ${ENABLE_CAPTCHA}
+REQUIRE_SIGNIN_VIEW    = ${REQUIRE_SIGNIN_VIEW}
+
+[picture]
+DISABLE_GRAVATAR        = ${DISABLE_GRAVATAR}
+ENABLE_FEDERATED_AVATAR = ${ENABLE_FEDERATED_AVATAR}
+
+[session]
+PROVIDER = redis
+PROVIDER_CONFIG=network=tcp,addr=redis:6379,db=0,pool_size=100,idle_timeout=180
+
+[log]
+MODE      = ${LOG_MODE}
+LEVEL     = ${LOG_LEVEL}
+ROOT_PATH = ${LOG_ROOT_PATH}
+
+[security]
+INSTALL_LOCK = true
+SECRET_KEY   = ${SECRET_KEY}
+
+[cache]
+ADAPTER = redis
+HOST = network=tcp,addr=redis:6379,db=0,pool_size=100,idle_timeout=180

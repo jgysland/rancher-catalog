@@ -1,0 +1,170 @@
+.catalog:
+  name: "Gogs"
+  version: "v0.8.43"
+  description: "A painless self-hosted Git service"
+  uuid: gogs-0
+  minimum_rancher_version: v0.51.0
+  questions:
+    - variable: DOMAIN
+      description: "Public domain or hostname for this Gogs instance"
+      label: "Gogs Domain/Hostname"
+      required: true
+      default: ""
+      type: "string"
+    - variable: HTTP_PORT
+      description: "http port to access gogs webui"
+      label: "HTTP Port"
+      required: false
+      default: "3000" 
+      type: "int"
+    - variable: PUBLISH_HTTP_PORT
+      description: "Publish the HTTP port on the Rancher host? (Set false if using a load balancer.)"
+      label: "Publish HTTP Port"
+      required: true
+      default: false
+      type: boolean
+    - variable: PUBLIC_SSH_PORT
+      description: "Publicly-exposed SSH port by which Gogs will be accessible"
+      label: "SSH Port"
+      required: false
+      default: "22"
+      type: "int"
+    - variable: PUBLISH_SSH_PORT
+      description: "Publish the HTTP port on the Rancher host?"
+      label: "SSH Port"
+      required: true
+      default: true
+      type: boolean
+    - variable: POSTGRES_USER
+      description: "Username to use for  the PostgreSQL database"
+      label: "Postgres User"
+      required: true
+      default: "gogs"
+      type: "string"
+    - variable: POSTGRES_PASSWORD
+      description: "Password to use for the PostgreSQL database"
+      label: "Postgres Password"
+      required: true
+      default: ""
+      type: "password"
+    - variable: APP_NAME
+      default: "Gogs: Go Git Service"
+      required: false
+      label: "Site Name"
+      description: ""
+      type: "string"
+    - variable: RUN_USER
+      default: git
+      required: false
+      label: "User to run application"
+      description: "Strongly recommended to leave as git."
+      type: "string"
+    - variable: RUN_MODE
+      default: prod
+      required: false
+      label: "Run as prod or debug."
+      description: ""
+      type: "string"
+    - variable: POSTGRES_DB
+      default: gogs
+      required: false
+      label: "Database name"
+      description:
+      type: "string"
+    - variable: POSTGRES_SSL_MODE
+      default: disable
+      required: false
+      label: "PostgreSQL SSL enabled"
+      description: ""
+      type: "string"
+    - variable: HTTP_PORT
+      default: 3000
+      required: false
+      label: "HTTP port"
+      description: "HTTP or HTTPS, depending on Public Protocol"
+      type: "string"
+    - variable: PUBLIC_PROTO
+      default: http
+      required: false
+      label: "Public Protocol"
+      description: ""
+      type: "string"
+    - variable: DISABLE_SSH
+      default: false
+      required: false
+      label: "Disable SSH"
+      description: ""
+      type: "string"
+    - variable: OFFLINE_MODE
+      default: false
+      required: false
+      label: "Offline Mode"
+      description: "Don't use CDNs."
+      type: "string"
+    - variable: MAILER_ENABLED
+      default: false
+      required: false
+      label: "Mailer Enabled"
+      description: ""
+      type: "string"
+    - variable: REGISTER_EMAIL_CONFIRM
+      default: false
+      required: false
+      label: "Require email confirmation for registration."
+      description: ""
+      type: "string"
+    - variable: ENABLE_NOTIFY_MAIL
+      default: false
+      required: false
+      label: "Enable email notifications."
+      description: ""
+      type: "string"
+    - variable: DISABLE_REGISTRATION
+      default: false
+      required: false
+      label: "Disable registrations."
+      description:
+      type: "string"
+    - variable: ENABLE_CAPTCHA
+      default: tru
+      required: false
+      label: "Enable Captchas"
+      description: ""
+      type: "string"
+    - variable: REQUIRE_SIGNIN_VIEW
+      default: true
+      required: false
+      label: "Require signing in"
+      description: ""
+      type: "string"
+    - variable: DISABLE_GRAVATAR
+      default: false
+      required: false
+      label: "Disable Gravatar"
+      description: ""
+      type: "string"
+    - variable: ENABLE_FEDERATED_AVATAR
+      default: true
+      required: false
+      label: "Enable Federated Avatar"
+      description: ""
+      type: "string"
+    - variable: LOG_MODE
+      default: file
+      required: false
+      label: "Logging mode"
+      description: ""
+      type: "string"
+    - variable: LOG_LEVEL
+      default: Info
+      required: false
+      label: "Logging level"
+      description: ""
+      type: "string"
+    - variable: LOG_ROOT_PATH
+      default: /app/gogs/log
+      required: false
+      label: "Log file path"
+      description: ""
+      type: "string"
+gogs:

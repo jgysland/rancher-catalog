@@ -1,0 +1,77 @@
+web:
+  image: jgys/gogs-envvar-ini:0.11.4
+  links:
+  - db:db
+  - redis:redis
+  environment:
+    DOMAIN: "${DOMAIN}"
+    HOST: "db:5432"
+    DB_TYPE: "postgres"
+    POSTGRES_DB: "${POSTGRES_DB}"
+    POSTGRES_USER: "${POSTGRES_USER}"
+    POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    APP_NAME: "${APP_NAME}"
+    RUN_USER: "${RUN_USER}"
+    RUN_MODE: "${RUN_MODE}"
+    POSTGRES_DB: "${POSTGRES_DB}"
+    POSTGRES_SSL_MODE: "${POSTGRES_SSL_MODE}"
+    HTTP_PORT: "${HTTP_PORT}"
+    PUBLIC_PROTO: "${PUBLIC_PROTO}"
+    DISABLE_SSH: "${DISABLE_SSH}"
+    OFFLINE_MODE: "${OFFLINE_MODE}"
+    MAILER_ENABLED: "${MAILER_ENABLED}"
+    REGISTER_EMAIL_CONFIRM: "${REGISTER_EMAIL_CONFIRM}"
+    ENABLE_NOTIFY_MAIL: "${ENABLE_NOTIFY_MAIL}"
+    DISABLE_REGISTRATION: "${DISABLE_REGISTRATION}"
+    ENABLE_CAPTCHA: "${ENABLE_CAPTCHA}"
+    REQUIRE_SIGNIN_VIEW: "${REQUIRE_SIGNIN_VIEW}"
+    DISABLE_GRAVATAR: "${DISABLE_GRAVATAR}"
+    ENABLE_FEDERATED_AVATAR: "${ENABLE_FEDERATED_AVATAR}"
+    LOG_MODE: "${LOG_MODE}"
+    LOG_LEVEL: "${LOG_LEVEL}"
+    LOG_ROOT_PATH: "${LOG_ROOT_PATH}"
+  labels:
+    io.rancher.sidekicks: db, redis, web-data, db-data
+  {{- if or (eq .Values.PUBLISH_HTTP_PORT "true") (eq .Values.PUBLISH_SSH_PORT "true") }}
+  ports:
+  {{- end }}
+  {{- if eq .Values.PUBLISH_HTTP_PORT "true" }}
+  - "${HTTP_PORT}:${HTTP_PORT}/tcp"
+  {{- end }}
+  {{- if eq .Values.PUBLISH_SSH_PORT "true" }}
+  - "${PUBLIC_SSH_PORT}:22/tcp"
+  {{- end }}
+  volumes_from:
+  - web-data
+  command: "sh -c '/docker/set_settings.sh'"
+
+db:
+  image: postgres:9.6-alpine
+  environment:
+    POSTGRES_DB: "${POSTGRES_DB}"
+    POSTGRES_USER: "${POSTGRES_USER}"
+    POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+  volumes_from:
+  - db-data
+
+redis:
+  image: redis:3-alpine
+  command: "redis-server --maxmemory 10mb --maxmemory-policy allkeys-lru"
+
+web-data:
+  image: jgys/gogs-envvar-ini:0.11.4
+  labels:
+    io.rancher.container.start_once: 'true'
+  entrypoint:
+  - /bin/true
+  volumes:
+  - /data
+
+db-data:
+  image: postgres:9.6-alpine
+  labels:
+    io.rancher.container.start_once: 'true'
+  entrypoint:
+  - /bin/true
+  volumes:
+  - /var/lib/postgresql/data
