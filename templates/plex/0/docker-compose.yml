@@ -1,0 +1,42 @@
+{{ $PLEX_PORT := .Values.PLEX_PORT }}
+{{ $MOVIE_PATH := .Values.MOVIE_PATH }}
+{{ $TV_PATH := .Values.TV_PATH }}
+{{ $MUSIC_PATH := .Values.MUSIC_PATH }}
+{{ $PHOTO_PATH := .Values.PHOTO_PATH }}
+{{ $HAS_VOLUMES := (or ($MOVIE_PATH) ($TV_PATH) ($MUSIC_PATH) ($PHOTO_PATH)) }}
+
+app:
+  restart: always
+  image: jgys/plex:latest
+  volumes_from:
+  - data
+  labels:
+    io.rancher.sidekicks: data
+  {{- if $PLEX_PORT }}
+  ports:
+   - "${PLEX_PORT}:32400"
+  {{- end }}
+  {{- if $HAS_VOLUMES }}
+  volumes:
+  {{- end }}
+  {{- if $MOVIE_PATH }}
+  - "${MOVIE_PATH}:/media/movies"
+  {{- end }}
+  {{- if $TV_PATH }}
+  - "${TV_PATH}:/media/tv"
+  {{- end }}
+  {{- if $MUSIC_PATH }}
+  - "${MUSIC_PATH}:/media/music"
+  {{- end }}
+  {{- if $PHOTO_PATH }}
+  - "${PHOTO_PATH}:/media/photos"
+  {{- end }}
+
+data:
+  image: jgys/plex:latest
+  labels:
+    io.rancher.container.start_once: true
+  entrypoint:
+  - /bin/true
+  volumes:
+  - /Library

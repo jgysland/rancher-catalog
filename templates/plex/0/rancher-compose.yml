@@ -1,0 +1,37 @@
+.catalog:
+  name: Plex Media Server
+  version: "1.0"
+  description: |
+    All your movie, TV show, music, and photo collections at your fingertips, anywhere you go on all the devices you love.
+  uuid: plex-0
+  questions:
+    - variable: MOVIE_PATH
+      label: "Movies Directory"
+      description: |
+        Directory containing movies to mount as a volume. If left blank, no volume will be mounted by the application container.
+      required: false
+      type: "string"
+    - variable: TV_PATH
+      label: "TV Shows Directory"
+      description: |
+        Directory containing TV shows to mount as a volume. If left blank, no volume will be mounted by the application container.
+      required: false
+      type: "string"
+    - variable: MUSIC_PATH
+      label: "Music Directory"
+      description: |
+        Directory containing music to mount as a volume. If left blank, no volume will be mounted by the application container.
+      required: false
+      type: "string"
+    - variable: PHOTO_PATH
+      label: "Photos Directory"
+      description: |
+        Directory containing photos to mount as a volume. If left blank, no volume will be mounted by the application container.
+      required: false
+      type: "string"
+    - variable: PLEX_PORT
+      label: "Plex Port"
+      description: |
+        TCP port to publish on host, bound to the container's port 32400, on which Plex will accept HTTP connections to its web interface and API. If left blank, no port is published, but the container's port 32400 is still exposed (e.g., for a load balancer.).
+      required: false
+      type: "int"

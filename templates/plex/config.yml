@@ -1,0 +1,7 @@
+name: Plex Media Server
+description: All your movie, TV show, music, and photo collections at your fingertips, anywhere you go on all the devices you love.
+category: Media
+version: 1.0
+maintainer: Jake Gysland
+license: MIT
+projectURL: https://github.com/jgysland/rancher-catalog
