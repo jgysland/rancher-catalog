@@ -1,0 +1,7 @@
+name: Transmission-OpenVPN
+description: Transmission BitTorrent Client + OpenVPN Client, containerized. Based on https://github.com/haugene/docker-transmission-openvpn.
+category: File Transfer
+version: 1.0
+maintainer: Jake Gysland
+license: MIT
+projectURL: https://github.com/jgysland/rancher-catalog

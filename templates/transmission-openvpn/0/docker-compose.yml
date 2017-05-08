@@ -1,0 +1,26 @@
+transmission-openvpn:
+  restart: always
+  image: haugene/transmission-openvpn
+  volumes:
+  - "${DOWNLOAD_DIR}:/Downloaded"
+  - "${INCOMPLETE_DOWNLOAD_DIR}:/Downloads"
+  environment:
+    OPENVPN_PROVIDER: "${OPENVPN_PROVIDER}"
+    OPENVPN_USERNAME: "${OPENVPN_USERNAME}"
+    OPENVPN_PASSWORD: "${OPENVPN_PASSWORD}"
+    OPENVPN_CONFIG: "${OPENVPN_CONFIG}"
+    OPENVPN_OPTS: "${OPENVPN_OPTS}"
+    TRANSMISSION_RPC_WHITELIST: "${TRANSMISSION_RPC_WHITELIST}"
+  cap_add:
+  - NET_ADMIN
+  devices:
+  - "/dev/net/tun:/dev/net/tun"
+  {{- if and (eq .Values.PUBLISH_TRANSMISSION_PORT "true") (.Values.TRANSMISSION_PORT) }}
+  ports:
+  - "${TRANSMISSION_PORT}:9091"
+  {{- end}}
+  {{- if or (.Values.DNS_1) (.Values.DNS_2) }}
+  dns:
+  {{- end }}
+  {{ if .Values.DNS_1 }}- "${DNS_1}"{{ end }}
+  {{ if .Values.DNS_2 }}- "${DNS_2}"{{ end }}

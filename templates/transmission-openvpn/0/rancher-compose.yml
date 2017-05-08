@@ -1,0 +1,69 @@
+.catalog:
+  name: Transmission-OpenVPN
+  version: "1.0"
+  description: |
+    Transmission BitTorrent client behind and OpenVPN connection.
+  uuid: transmission-openvpn-0
+  questions:
+    - variable: DOWNLOAD_DIR
+      label: "Completed Download Directory"
+      required: true
+      type: "string"
+    - variable: INCOMPLETE_DOWNLOAD_DIR
+      label: "Incomplete Download Directory"
+      required: true
+      type: "string"
+    - variable: OPENVPN_PROVIDER
+      default: "pia"
+      label: "OpenVPN service provider"
+      required: true
+      type: "string"
+    - variable: OPENVPN_USERNAME
+      label: "Username for OpenVPN service"
+      required: true
+      type: "string"
+    - variable: OPENVPN_PASSWORD
+      label: "Password for OpenVPN service"
+      required: true
+      type: "string"
+    - variable: OPENVPN_CONFIG
+      label: "OpenVPN configuration variable"
+      description: ""
+      required: false
+      type: "string"
+    - variable: OPENVPN_OPTS
+      default: "--inactive 3600 --ping 10 --ping-exit 60"
+      label: "Command line options passed to OpenVPN binary"
+      required: false
+      type: "string"
+    - variable: TRANSMISSION_RPC_WHITELIST
+      default: "127.0.0.1"
+      label: "Transmission RPC Whitelist"
+      description: |
+          Comma-separated list of hostnames and `\*`-glob respecting IP addresses from which Transmission should accept RPC requests.
+      required: true
+      type: "string"
+    - variable: TRANSMISSION_PORT
+      default: 9091
+      label: "Transmission HTTP Port"
+      description: "Port on which Transmission should listen for Web UI and RPC requests."
+      required: true
+      type: "int"
+    - variable: PUBLISH_TRANSMISSION_PORT
+      default: false
+      label: "Publish Transmission HTTP Port?"
+      description: "If port is not published, a load balancer can be used to make it accessible outside the container."
+      required: true
+      type: "boolean"
+    - variable: DNS_1
+      default: "8.8.8.8"
+      label: "DNS #1"
+      description: "DNS to use within container."
+      required: false
+      type: "string"
+    - variable: DNS_2
+      default: "8.8.4.4"
+      label: "DNS #2"
+      description: "DNS to use within container."
+      required: false
+      type: "string"
