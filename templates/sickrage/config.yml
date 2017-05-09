@@ -1,0 +1,7 @@
+name: SickRage
+description: Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic.
+category: Media
+version: 1.0
+maintainer: Jake Gysland
+license: MIT
+projectURL: https://github.com/jgysland/rancher-catalog

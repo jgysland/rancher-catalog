@@ -1,0 +1,24 @@
+app:
+  image: jgys/sickrage
+  restart: always
+  {{- if .Values.HTTP_PORT }}
+  ports:
+  - "${HTTP_PORT}:8081"
+  {{- end }}
+  command: [--datadir=/data/{{ if.Values.CONFIG_DIR}}, --config=/config/config.ini{{end}}]
+
+data:
+  image: jgys/sickrage
+  labels:
+    io.rancher.container.start_once: 'true'
+  entrypoint:
+  - /bin/true
+  volumes:
+  - "${MEDIA_DIR}:/media"
+  - "${DOWNLOAD_DIR}:/downloaded"
+  {{- if .Values.DATA_DIR }}
+  - "${DATA_DIR}:/data"
+  {{- end }}
+  {{- if .Values.CONFIG_DIR }}
+  - "${CONFIG_DIR}:/config"
+  {{- end }}

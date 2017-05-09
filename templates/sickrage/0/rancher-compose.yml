@@ -1,0 +1,31 @@
+.catalog:
+  name: SickRage
+  version: "1.0"
+  description: |
+    Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic.
+  uuid: sickrage-0
+  questions:
+  - variable: DOWNLOAD_DIR
+    label: "Completed Downloads Directory"
+    description: |
+      Directory (on host) where BitTorrent and/or Usenet clients put completed downloads.
+    required: true
+    type: "string"
+  - variable: MEDIA_DIR
+    label: "Media Directory"
+    description: |
+        Directory (on host) to store downloaded shows after post-processing.
+    required: true
+    type: "string"
+  - variable: DATA_DIRECTORY
+    label: "Data Directory"
+    description: |
+      Directory (on host) to bind-mount for SickRage data. If blank, data is kept only in volume container.
+    required: false
+    type: "string"
+  - variable: CONFIG_DIRECTORY
+    label: "Config Directory"
+    description: |
+      Directory (on host) to bind-mount for SickRage config. If blank, config is kept only in volume container.
+    required: false
+    type: "string"
