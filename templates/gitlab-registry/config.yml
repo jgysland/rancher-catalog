@@ -1,0 +1,5 @@
+name: Gitlab CE w/ Regisry & Gitlab CI Docker Runner
+category: Registry
+maintainer: Jake Gysland
+license: MIT
+projectURL: https://github.com/jgysland/rancher-catalog

@@ -1,0 +1,21 @@
+.catalog:
+  name: Gitlab CE w/ Regisry & Gitlab CI Docker Runner
+  version: "1.0"
+  uuid: gitlab-ce-registry-runner
+  questions:
+    - variable: GITLAB_URL
+      label: "Gitlab URL"
+      required: true
+      type: "string"
+    - variable: GITLAB_SHELL_SSH_PORT
+      label: "SSH Port"
+      required: true
+      type: "int"
+    - variable: GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN
+      label: "Registration Token for Gitlab Runners"
+      required: true
+      type: "password"
+    - variable: GITLAB_REGISTRY_URL
+      label: "Gitlab Registry URL"
+      required: true
+      type: "string"

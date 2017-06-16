@@ -1,0 +1,65 @@
+version: '2'
+services:
+  server:
+    image: gitlab/gitlab-ce:latest
+    hostname: ${GITLAB_URL}
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |-
+        external_url 'https://${GITLAB_URL}';
+        nginx['listen_port'] = 80;
+        nginx['listen_https'] = false;
+        nginx['proxy_set_headers'] = {
+          "X-Forwarded-Proto" => "https",
+          "X-Forwarded-Ssl" => "on"
+        };
+        gitlab_rails['gitlab_shell_ssh_port'] = "${GITLAB_SHELL_SSH_PORT}";
+        gitlab_rails['gitlab_shared_runners_registration_token'] = '${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN}';
+        registry_external_url 'https://${GITLAB_REGISTRY_URL}';
+        registry['enable'] = true;
+        gitlab_rails['registry_enabled'] = true;
+        registry_nginx['listen_port'] = 80;
+        registry_nginx['listen_https'] = false;
+        registry_nginx['proxy_set_headers'] = {
+          "X-Forwarded-Proto" => "https",
+          "X-Forwarded-Ssl" => "on"
+        };
+    volumes:
+    - /gitlab/config:/etc/gitlab
+    - /gitlab/logs:/var/log/gitlab
+    - /gitlab/data:/var/opt/gitlab
+    labels:
+      io.rancher.container.pull_image: always
+  cleanup:
+    image: quay.io/gitlab/gitlab-runner-docker-cleanup
+    environment:
+      DEFAULT_TTL: 30m
+    stdin_open: true
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.global: 'true'
+  ci-node:
+    privileged: false
+    image: gitlab/gitlab-runner
+    environment:
+      CI_SERVER_URL: https://${GITLAB_URL}/ci
+      REGISTRATION_TOKEN: ${GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN}
+      RUNNER_NAME: rancher-gitlab-docker-runner
+      REGISTER_NON_INTERACTIVE: true
+    tty: true
+    stdin_open: true
+    entrypoint: |
+      sh -c '
+      gitlab-runner register \
+        --executor docker \
+        --description "My Docker Runner" \
+        --docker-image "docker:latest" \
+        --docker-volumes /var/run/docker.sock:/var/run/docker.sock && \
+      /usr/bin/dumb-init /entrypoint run --user=gitlab-runner --working-directory=/home/gitlab-runner
+      '
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:rw
+    labels:
+      io.rancher.container.pull_image: always
