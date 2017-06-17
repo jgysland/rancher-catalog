@@ -1,0 +1,29 @@
+version: '2'
+services:
+  app:
+    image: owncloud
+    links:
+      - db
+    volumes:
+      {{- if .Values.DATA_PATH }}
+      - "${DATA_PATH}:/var/www/owncloud/data"
+      {{- else }}
+      - /var/www/owncloud/data
+      {{- end }}
+      {{- if .Values.APPS_PATH }}
+      - ${APPS_PATH}:/var/www/html/apps
+      {{- else }}
+      - /var/www/html/apps
+      {{- end }}
+      {{- if .Values.CONFIG_PATH }}
+      - ${CONFIG_PATH}:/var/www/html/config
+      {{- else }}
+      - /var/www/html/config
+      {{- end }}
+    links:
+      - db
+
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}

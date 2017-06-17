@@ -1,0 +1,33 @@
+.catalog:
+  name: "Owncloud"
+  version: 1
+  description: "Library service powered by Owncloud"
+  uuid: owncloud-0
+  minimum_rancher_version: v0.51.0
+  questions:
+    - variable: DATA_PATH
+      label: "Data Path"
+      description: |
+        Host path on which to bind-mount data volume. If empty, volume is not bind-mounted.
+      required: false
+      type: "string"
+    - variable: APPS_PATH
+      label: "Apps Path"
+      description: |
+        Host path on which to bind-mount apps volume. If empty, volume is not bind-mounted.
+      required: false
+      type: "string"
+    - variable: CONFIG_PATH
+      label: "Config Path"
+      description: |
+        Host path on which to bind-mount config volume. If empty, volume is not bind-mounted.
+      required: false
+      type: "string"
+    - variable: MYSQL_ROOT_PASSWORD
+      label: "MySQL Root Password"
+      description: |
+        Root password for database.
+      required: true
+      type: "password"
+
+app:
